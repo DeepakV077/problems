@@ -1,27 +1,76 @@
-940. Distinct Subsequences II
-Given a string s, return the number of distinct non-empty subsequences of s. Since the answer may be very large, return it modulo 109 + 7.
+# 940. Distinct Subsequences II
 
-A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not.
- 
+Given a string `s`, return the number of distinct non-empty subsequences of `s`.
+Since the answer may be very large, return it modulo $10^9 + 7$.
 
-Example 1:
+A subsequence is formed by deleting zero or more characters without changing the
+relative order of the remaining characters.
 
+## Examples
+
+### Example 1
+
+```text
 Input: s = "abc"
 Output: 7
-Explanation: The 7 distinct subsequences are "a", "b", "c", "ab", "ac", "bc", and "abc".
-Example 2:
+```
 
+The distinct subsequences are `"a"`, `"b"`, `"c"`, `"ab"`, `"ac"`, `"bc"`,
+and `"abc"`.
+
+### Example 2
+
+```text
 Input: s = "aba"
 Output: 6
-Explanation: The 6 distinct subsequences are "a", "b", "ab", "aa", "ba", and "aba".
-Example 3:
+```
 
+The distinct subsequences are `"a"`, `"b"`, `"ab"`, `"aa"`, `"ba"`, and
+`"aba"`.
+
+### Example 3
+
+```text
 Input: s = "aaa"
 Output: 3
-Explanation: The 3 distinct subsequences are "a", "aa" and "aaa".
- 
+```
 
-Constraints:
+The distinct subsequences are `"a"`, `"aa"`, and `"aaa"`.
 
-1 <= s.length <= 2000
-s consists of lowercase English letters.
+## Approach
+
+Let `total` be the number of distinct non-empty subsequences found so far.
+For each character, every existing subsequence can either exclude or append that
+character, creating `total + 1` candidates.
+
+Appending a character can duplicate subsequences created when the same character
+appeared earlier. `end[c]` stores how many new subsequences were created the last
+time character `c` was processed. Therefore, for the current character `c`:
+
+```text
+newSubsequences = total + 1 - end[c]
+total += newSubsequences
+end[c] = newSubsequences
+```
+
+All calculations are performed modulo $10^9 + 7$.
+
+## Correctness
+
+Before processing a character, `total` contains every distinct subsequence that
+can be formed from the processed prefix. Appending the character to each of
+those subsequences, plus the one-character subsequence, produces all candidates
+ending with the current character. Exactly `end[c]` of them were already added
+when `c` was processed previously, so subtracting that value removes duplicates.
+Updating `end[c]` records the new set of subsequences ending in `c`, preserving
+the invariant for the next occurrence.
+
+## Complexity
+
+- Time: $O(n)$
+- Space: $O(1)$
+
+## Constraints
+
+- `1 <= s.length <= 2000`
+- `s` consists of lowercase English letters.
