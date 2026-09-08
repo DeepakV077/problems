@@ -1,6 +1,6 @@
 import java.util.*;
-class solution{
-    public int distinct(int n){
+class Solution{
+    public int countCommas(int n){
         return Math.max(0,n-999);
     }
     public static void main(String[] args) {
@@ -8,8 +8,9 @@ class solution{
                 System.out.print("Enter the Value:");
 
         int n=s.nextInt();
-        solution sol = new solution();
-        int result=sol.distinct(n);
+        Solution sol = new Solution();
+        int result=sol.countCommas(n);
         System.out.print(result);
+
     }
 }

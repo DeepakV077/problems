@@ -1,4 +1,4 @@
-class solution{
+class Solution{
     public int distinctSubseqII(String s){
         int mod=1_000_000_007;
         int[] end=new int[26];
@@ -14,7 +14,7 @@ class solution{
     }
 
     public static void main(String[] args) {
-        solution sol = new solution();
+        Solution sol = new Solution();
         String s = "abc";
         int result = sol.distinctSubseqII(s);
         System.out.println("The number of distinct subsequences is: " + result);
