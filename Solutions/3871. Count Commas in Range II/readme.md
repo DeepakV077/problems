@@ -1,42 +1,59 @@
-3871. Count Commas in Range II
-Solved
-Medium
-Topics
-premium lock icon
-Companies
-Hint
-You are given an integer n.
+# 3871. Count Commas in Range II
 
-Return the total number of commas used when writing all integers from [1, n] (inclusive) in standard number formatting.
+**Difficulty:** Medium
 
-In standard formatting:
+Given an integer `n`, return the total number of commas used when writing every
+integer from `[1, n]` in standard number formatting.
 
-A comma is inserted after every three digits from the right.
-Numbers with fewer than 4 digits contain no commas.
- 
+A comma is inserted after every three digits from the right. Numbers below
+`1000` contain no commas.
 
-Example 1:
+## Examples
 
+### Example 1
+
+```text
 Input: n = 1002
-
 Output: 3
+```
 
-Explanation:
+The numbers `1,000`, `1,001`, and `1,002` each contain one comma.
 
-The numbers "1,000", "1,001", and "1,002" each contain one comma, giving a total of 3.
+### Example 2
 
-Example 2:
-
+```text
 Input: n = 998
-
 Output: 0
+```
 
-Explanation:
+Every number from `1` through `998` contains fewer than four digits.
 
-​​​​​​​All numbers from 1 to 998 have fewer than four digits. Therefore, no commas are used.
+## Approach
 
- 
+For each power of `1000`, count one additional comma for every number from
+that threshold through `n`:
 
-Constraints:
+- `1000`: the first comma appears.
+- `1000000`: a second comma appears.
+- `1000000000`: a third comma appears.
 
-1 <= n <= 1015
+For a threshold `start`, the contribution is `n - start + 1`. Continue
+multiplying the threshold by `1000` until it exceeds `n`.
+
+The loop checks `start > n / 1000` before multiplication to avoid overflow.
+
+## Correctness
+
+Every number in `[start, n]` has at least one additional comma at the digit
+group represented by `start`. Therefore, that threshold contributes exactly
+`n - start + 1` commas. Summing this contribution for every threshold
+`1000, 1000000, 1000000000, ...` counts each comma exactly once.
+
+## Complexity
+
+- **Time:** $O(\log_{1000} n)$
+- **Space:** $O(1)$
+
+## Constraints
+
+- `1 <= n <= 10^15`
